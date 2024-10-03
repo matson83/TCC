@@ -19,4 +19,4 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
-storage/google-cloud-key.json
+/storage/google-cloud-key.json
