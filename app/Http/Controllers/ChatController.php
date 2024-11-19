@@ -18,16 +18,17 @@ class ChatController extends Controller
                 [
                     'role' => 'user',
                     'content' => "
-                    Aqui está o discurso transcrito:
+                    Aqui está a transcrição de um discurso:
 
                     {$transcricao}
 
-                    Por favor, divida este discurso nos seguintes elementos:
-                    - Título
-                    - Dados relevantes
-                    - Pessoas citadas
-                    - Assunto
-                    - Referências
+                    Por favor, identifique e categorize as informações nas seguintes seções:
+                    - **Título ou Resumo:** Forneça um título ou resumo breve do discurso.
+                    - **Dados Relevantes:** Liste fatos, datas, números ou estatísticas presentes no discurso.
+                    - **Pessoas e Entidades Citadas:** Quem ou quais organizações foram mencionadas?
+                    - **Temas Centrais:** Qual o principal tema ou objetivo do discurso?
+                    - **Referências ou Citações Diretas:** Inclua qualquer referência, citação ou fonte mencionada no discurso.
+                    Certifique-se de manter precisão e clareza.
                     "
                 ]
             ],
@@ -53,7 +54,11 @@ class ChatController extends Controller
                     Aqui estão os links relevantes encontrados na pesquisa:
                     " . implode(", ", array_map(fn($result) => $result['link'], $searchResults)) . "
 
-                    Analise esse discurso e me passe uma comparação com as notícias dessa informação e veja se é legítima.
+                    Por favor:
+                    1. Compare o conteúdo do discurso com as informações disponíveis nos links fornecidos.
+                    2. Identifique qualquer discrepância, erro factual ou informações que não estejam corroboradas pelas fontes.
+                    3. Dê uma avaliação de legitimidade (Alta, Média ou Baixa) com base na consistência das informações.
+                    4. Explique sua análise de forma detalhada.
                     "
                 ]
             ],
@@ -83,17 +88,76 @@ class ChatController extends Controller
         // Processar os resultados
         $searchResults = json_decode($response->getBody()->getContents(), true);
 
-        // Inicializa um array para armazenar os links formatados
         $resultadosFormatados = [];
         if (isset($searchResults['organic_results'])) {
             foreach ($searchResults['organic_results'] as $result) {
                 $resultadosFormatados[] = [
                     'title' => $result['title'],
-                    'link' => $result['link']
+                    'link' => $result['link'],
+                    'snippet' => $result['snippet'] ?? '', // Inclui um resumo quando disponível
+                    'source' => $result['displayed_link'] ?? '', // Fonte do link
                 ];
             }
         }
 
-        return $resultadosFormatados; // Retorna um array de resultados
+        // Refine os links para priorizar os mais importantes
+        $resultadosFormatados = $this->refinarLinks($resultadosFormatados, $transcricao);
+
+        return $resultadosFormatados; // Retorna um array de resultados refinados
+    }
+
+    private function refinarLinks(array $resultados, string $transcricao)
+    {
+        $palavrasChave = explode(' ', $transcricao); // Extrai palavras-chave da transcrição
+
+
+        $fontesConfiaveis = [
+            'bbc.com',
+            'nytimes.com',
+            'reuters.com',
+            'forbes.com',
+            'cnn.com', // fontes internacionais
+            'senado.leg.br',
+            'g1.globo.com',
+            'uol.com.br',
+            'folha.uol.com.br',
+            'veja.abril.com.br', // fontes brasileiras
+            'estadao.com.br',
+            'correio24horas.com.br',
+            'oglobo.globo.com',
+            'jornalextra.globo.com',
+            'exame.com',
+            'terra.com.br',
+            'r7.com',
+            'brasil247.com',
+        ];
+
+        // Adiciona pesos para fontes confiáveis
+        foreach ($resultados as &$resultado) {
+            $peso = 0;
+
+            // Aumenta o peso se a fonte for confiável
+            foreach ($fontesConfiaveis as $fonte) {
+                if (strpos($resultado['source'], $fonte) !== false) {
+                    $peso += 5;
+                    break;
+                }
+            }
+
+            // Aumenta o peso se o título ou snippet contiver palavras-chave relevantes
+            foreach ($palavrasChave as $palavra) {
+                if (stripos($resultado['title'], $palavra) !== false || stripos($resultado['snippet'], $palavra) !== false) {
+                    $peso += 2;
+                }
+            }
+
+            $resultado['peso'] = $peso; // Armazena o peso no array de resultados
+        }
+
+        // Ordena os resultados pelo peso em ordem decrescente
+        usort($resultados, fn($a, $b) => $b['peso'] <=> $a['peso']);
+
+        // Retorna os 5 primeiros links mais relevantes
+        return array_slice($resultados, 0, 5);
     }
 }

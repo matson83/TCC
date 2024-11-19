@@ -3,24 +3,24 @@ body {
     background-color: #f4f4f4;
     color: #333;
     margin: 0;
-    padding: 20px;
+
 }
 
 h2 {
-    color: #4CAF50;
+    color: #000000;
     margin-bottom: 10px;
 }
 
-form {
+/* form {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+} */
 
-input[type="file"] {
+/* input[type="file"] {
     margin-bottom: 10px;
     display: block;
     padding: 10px;
@@ -28,13 +28,13 @@ input[type="file"] {
     border-radius: 5px;
     background-color: #f9f9f9;
     cursor: pointer;
-}
+} */
 
-input[type="file"]:hover {
+/* input[type="file"]:hover {
     border-color: #4CAF50;
-}
+} */
 
-button {
+/* button {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -42,11 +42,11 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
+} */
 
-button:hover {
+/* button:hover {
     background-color: #45a049;
-}
+} */
 
 .error-messages {
     color: red;
