@@ -2,26 +2,7 @@
 
 <body class="bg-gray-800">
 
-    <!-- Navigation -->
-    <nav class="bg-gray-800 border-b dark:bg-gray-900 mb-4">
-        <div class="w-full">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center justify-end w-full ">
-                    <div class="space-x-8 flex px-4">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Painel Administrador') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Contato') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Informações do Trabalho') }}
-                        </x-nav-link>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <x-navigation/>
 
 
     <!-- Formulário de upload-->
@@ -29,7 +10,7 @@
         @csrf
         <div class="input-group p-4">
             <input type="file" class="form-control" name="audio" id="audio" accept=".mp3" aria-label="Upload" required>
-            <button class="btn btn-outline-secondary" type="submit" id="button">Transcrever Áudio</button>
+            <button class="btn btn-outline-secondary" type="submit" id="button">Analisar Áudio</button>
         </div>
 
     </form>

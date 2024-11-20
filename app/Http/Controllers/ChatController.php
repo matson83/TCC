@@ -22,13 +22,24 @@ class ChatController extends Controller
 
                     {$transcricao}
 
-                    Por favor, identifique e categorize as informações nas seguintes seções:
-                    - **Título ou Resumo:** Forneça um título ou resumo breve do discurso.
-                    - **Dados Relevantes:** Liste fatos, datas, números ou estatísticas presentes no discurso.
-                    - **Pessoas e Entidades Citadas:** Quem ou quais organizações foram mencionadas?
-                    - **Temas Centrais:** Qual o principal tema ou objetivo do discurso?
-                    - **Referências ou Citações Diretas:** Inclua qualquer referência, citação ou fonte mencionada no discurso.
-                    Certifique-se de manter precisão e clareza.
+                    Título ou Resumo:
+
+                        Forneça um título claro ou um resumo breve e objetivo do discurso, destacando sua ideia principal.
+                        Dados Relevantes:
+
+                        Liste todos os fatos, datas, números ou estatísticas mencionados no discurso.
+                        Certifique-se de incluir os detalhes de maneira precisa, sem distorções ou omissões.
+                        Pessoas e Entidades Citadas:
+
+                        Identifique todas as pessoas, organizações ou entidades mencionadas no discurso.
+                        Inclua cargos, funções ou contextos relevantes para entender melhor as citações.
+                        Temas Centrais:
+
+                        Identifique o principal tema ou objetivo do discurso. O que está sendo comunicado? Qual é a mensagem central?
+                        Referências ou Citações Diretas:
+
+                        Inclua todas as referências, citações ou fontes mencionadas no discurso.
+                        Certifique-se de que as fontes estão corretamente atribuídas e que as citações são precisas.
                     "
                 ]
             ],
@@ -54,11 +65,24 @@ class ChatController extends Controller
                     Aqui estão os links relevantes encontrados na pesquisa:
                     " . implode(", ", array_map(fn($result) => $result['link'], $searchResults)) . "
 
-                    Por favor:
-                    1. Compare o conteúdo do discurso com as informações disponíveis nos links fornecidos.
-                    2. Identifique qualquer discrepância, erro factual ou informações que não estejam corroboradas pelas fontes.
-                    3. Dê uma avaliação de legitimidade (Alta, Média ou Baixa) com base na consistência das informações.
-                    4. Explique sua análise de forma detalhada.
+                  Comparação com Fontes Externas:
+
+                        Compare o conteúdo do discurso com as informações fornecidas nos links ou fontes externas indicadas.
+                        Verifique a consistência dos dados, confirmando se as informações do discurso estão alinhadas com as fontes externas.
+                        Identificação de Discrepâncias ou Erros:
+
+                        Identifique e descreva qualquer discrepância, erro factual ou informações que não estejam corroboradas pelas fontes externas de alta credibilidade.
+                        Verifique se existem informações desatualizadas, distorcidas ou ausentes nas fontes.
+                        Avaliação da Legitimidade:
+
+                        Com base na comparação das informações, atribua uma avaliação de legitimidade:
+                        Alta: As informações são precisas, bem fundamentadas e corroboradas por fontes confiáveis.
+                        Média: Existem algumas inconsistências ou fontes questionáveis, mas o discurso ainda possui uma base razoável de legitimidade.
+                        Baixa: O discurso contém múltiplas discrepâncias, dados imprecisos ou informações não verificadas que comprometem sua confiabilidade.
+                        Justificação Detalhada:
+
+                        Explique de maneira detalhada os passos da sua análise, descrevendo claramente as fontes usadas, as discrepâncias encontradas e as razões para a avaliação de legitimidade atribuída.
+                        Se necessário, forneça exemplos específicos de erros ou inconsistências identificadas e como elas impactam a credibilidade do discurso.
                     "
                 ]
             ],

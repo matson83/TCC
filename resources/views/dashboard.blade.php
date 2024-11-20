@@ -1,5 +1,5 @@
 <x-app-layout>
-    
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -51,12 +51,12 @@
 
 
                     @if(isset($transcricoes) && $transcricoes->isNotEmpty())
-                    <h2>Transcrições Anteriores e Pesquisas na rede:</h2>
+                    <h2>Resultados das Pesquisas Realizadas:</h2>
                     <ul>
                         @foreach($transcricoes as $transcricao)
                             <li>
-                                <strong>Transcrição Ajustada:</strong> {{ $transcricao->transcricao_ajustada }}<br>
-                                <strong>Criado em:</strong> {{ $transcricao->created_at }}
+                                <strong><h2>Resultado da Pesquisa:</h2></strong> {{ $transcricao->transcricao_ajustada }}<br>
+                                <strong><h2 class="pt-1">Criado em:</h2></strong> {{ $transcricao->created_at }}
                             </li>
                             <hr>
                         @endforeach
