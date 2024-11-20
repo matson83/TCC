@@ -2,6 +2,8 @@
 
 <body class="bg-gray-800">
 
+
+
     <x-navigation/>
 
 
